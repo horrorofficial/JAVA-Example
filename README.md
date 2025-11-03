@@ -98,6 +98,13 @@ Add this in **AndroidManifest.xml**:
 
 ```java
 AuthSecure = new AuthSecure(name, ownerid, version, url, secret, this);
+
+private static final String name = ""; // App name
+private static final String ownerid = ""; // Account ID
+private static final String secret = ""; // Application secret
+private static final String version = ""; // Application version
+private static final String url = "https://authsecure.shop/post/api.php"; // change if using AuthSecure custom domains feature
+
 ```
 
 ### 3️⃣ Perform Login
