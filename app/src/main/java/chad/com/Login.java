@@ -16,18 +16,18 @@ public class Login extends Activity {
     Button loginBtn, activateLicenseBtn, licenseLoginBtn;
     ProgressBar loader;
 
-    private static final String APP_NAME = "XD";
-    private static final String OWNER_ID = "3ezshCmkXrn";
-    private static final String SECRET = "7a8bfeb28afcd690812ee5de010a6860";
-    private static final String VERSION = "1.0";
-    private static final String API_URL = "https://authsecure.shop/post/api.php";
+    private static final String name = "XD";
+    private static final String ownerid = "3ezshCmkXrn";
+    private static final String secret = "7a8bfeb28afcd690812ee5de010a6860";
+    private static final String version = "1.0";
+    private static final String url = "https://authsecure.shop/post/api.php";
 
     AuthSecure AuthSecure;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AuthSecure = new AuthSecure(APP_NAME, OWNER_ID, VERSION, API_URL, SECRET, this);
+        AuthSecure = new AuthSecure(name, ownerid, version, url, secret, this);
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
         root.setGravity(Gravity.CENTER);
