@@ -57,7 +57,7 @@ public class AuthSecure {
 
         // ✅ HWID fetch and patch
         String rawHwid = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-        String hwid = (rawHwid + "AuThSeCure01");
+        String hwid = rawHwid; // best: no suffix, no slicing
 
         String loginUrl = url +
                 "?type=login" +
@@ -95,9 +95,9 @@ public class AuthSecure {
             throw new Exception("Session ID not initialized. Call init first.");
         }
 
-        // HWID same patch logic as login
         String rawHwid = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-        String hwid = (rawHwid + "AuThSeCure01").substring(0, Math.max(20, (rawHwid + "AuThSeCure01").length()));
+        String hwid = rawHwid; // best: no suffix, no slicing
+
 
         String registerUrl = url +
                 "?type=register" +
@@ -120,9 +120,9 @@ public class AuthSecure {
         if (sessionid == null || sessionid.isEmpty()) {
             throw new Exception("Session ID not initialized. Call init first.");
         }
-        // ✅ HWID fetch and patch for 20+ characters
         String rawHwid = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-        String hwid = (rawHwid + "AuThSeCure01").substring(0, Math.max(20, (rawHwid + "AuThSeCure01").length()));
+        String hwid = rawHwid; // best: no suffix, no slicing
+
 
         String licenseUrl = url +
                 "?type=license" +
