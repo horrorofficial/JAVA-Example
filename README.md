@@ -49,7 +49,7 @@ Device hardware ID is generated using:
 
 ```java
 String rawHwid = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-String hwid = (rawHwid + "AuThSeCure01").substring(0, Math.max(20, (rawHwid + "AuThSeCure01").length()));
+String hwid = rawHwid
 ````
 
 **Behavior Rules:**
@@ -97,15 +97,43 @@ Add this in **AndroidManifest.xml**:
 ### 2️⃣ Initialize Authentication Class
 
 ```java
-AuthSecure = new AuthSecure(APP_NAME, OWNER_ID, VERSION, API_URL, SECRET, this);
+AuthSecure = new AuthSecure(name, ownerid, version, url, secret, this);
 ```
 
 ### 3️⃣ Perform Login
 
 ```java
-String username = usernameEditText.getText().toString();
-String password = passwordEditText.getText().toString();
-AuthSecure.login(username, password, hwid);
+    private void loginNow() {
+        final String user = usernameField.getText().toString().trim();
+        final String pass = passwordField.getText().toString().trim();
+
+        if (user.isEmpty() || pass.isEmpty()) {
+            toast("Enter Username & Password");
+            return;
+        }
+
+        setUiBusy(true);
+
+        new Thread(() -> {
+            try {
+                AuthSecure.init();
+                AuthSecure.login(user, pass);
+                AuthSecureInstance.AuthSecure = AuthSecure;
+
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    toast("Login Successful ✅");
+                    startActivity(new Intent(Login.this, MainActivity.class));
+                    finish();
+                });
+
+            } catch (Exception e) {
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    toast("Login Failed ❌ " + e.getMessage());
+                    setUiBusy(false);
+                });
+            }
+        }).start();
+    }
 ```
 
 ---
@@ -118,6 +146,68 @@ Username: test_user
 Plan: Premium
 Expires: 2025-12-19
 Device Verified ✓
+```
+
+---
+### Perform Register
+
+```java    private void registerNow() {
+        final String user = usernameField.getText().toString().trim();
+        final String pass = passwordField.getText().toString().trim();
+        final String license = licenseField.getText().toString().trim();
+        if (user.isEmpty() || pass.isEmpty() || license.isEmpty()) {
+            toast("Enter Username, Password & License");
+            return;
+        }
+        setUiBusy(true);
+        new Thread(() -> {
+            try {
+                AuthSecure.init();
+                AuthSecure.register(user, pass, license);
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    toast("Registered ✅ Now Login");
+                    setUiBusy(false);
+                });
+            } catch (Exception e) {
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    toast("Register Failed ❌ " + e.getMessage());
+                    setUiBusy(false);
+                });
+            }
+        }).start();
+    }
+
+```
+
+---
+
+### Perform license Login
+
+```java    private void licenseLoginNow() {
+        final String license = licenseField.getText().toString().trim();
+        if (license.isEmpty()) {
+            toast("Enter License Key");
+            return;
+        }
+        setUiBusy(true);
+        new Thread(() -> {
+            try {
+                AuthSecure.init();
+                AuthSecure.license(license);
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    toast("Logged In ✅");
+                    startActivity(new Intent(Login.this, MainActivity.class));
+                    finish();
+                });
+            } catch (Exception e) {
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    toast("Failed ❌ " + e.getMessage());
+                    setUiBusy(false);
+                });
+            }
+        }).start();
+    }
+
 ```
 
 ---
