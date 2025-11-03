@@ -105,6 +105,8 @@ private static final String secret = ""; // Application secret
 private static final String version = ""; // Application version
 private static final String url = "https://authsecure.shop/post/api.php"; // change if using AuthSecure custom domains feature
 
+    AuthSecure AuthSecure;
+
 ```
 
 ### 3️⃣ Perform Login
