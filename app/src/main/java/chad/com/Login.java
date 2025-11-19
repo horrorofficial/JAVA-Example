@@ -20,7 +20,7 @@ public class Login extends Activity {
     private static final String ownerid = "3ezshCmkXrn";
     private static final String secret = "7a8bfeb28afcd690812ee5de010a6860";
     private static final String version = "1.0";
-    private static final String url = "https://authsecure.shop/post/api.php";
+    private static final String url = "https://horrorgamingkeyauth.shop/post/api.php";
 
     AuthSecure AuthSecure;
 
